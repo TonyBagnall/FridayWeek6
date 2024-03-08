@@ -15,7 +15,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class SliderExample extends Application {
-    enum SliderType{STATIC,INNER,LOCAL,ANON,LAMBDA,FUNCTION}
+    enum SliderType{STATIC,INNER,ANON,LAMBDA,FUNCTION}
     static SliderType nested=SliderType.ANON;
     static String message="Set with "+nested;
 
@@ -57,7 +57,16 @@ public class SliderExample extends Application {
             buttons[i] = new RadioButton(names[i]);
             buttons[i].setToggleGroup(group);
             final int x = i;
-            buttons[i].setOnAction(a -> nested = SliderType.values()[x]);
+//            buttons[i].setOnAction(a -> nested = SliderType.values()[x]);
+            // Add action listener to the toggle button
+            buttons[i].selectedProperty().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                    if (newValue)
+                        nested = SliderType.values()[x];
+                }
+            });
+
             container.getChildren().add(buttons[i]);
         }
         return container;
@@ -78,7 +87,7 @@ public class SliderExample extends Application {
                 s.valueProperty().addListener(new ChangeListener<Number>() {
                     @Override
                     public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                        sliderValue.setText(String.format(message+" %.2f", newValue));
+                        sliderValue.setText(String.format(nested+" %.2f", newValue));
                         System.out.println(" Value of message = "+message+" value of nested = "+nested);
                     }
                 });
