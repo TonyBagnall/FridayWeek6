@@ -1,0 +1,13 @@
+/* style.css */
+.button-red {
+    -fx-background-color: #0066ff;
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10 20 10 20;
+}
+
+.button-red:hover {
+    -fx-background-color: #cc0000;
+}
